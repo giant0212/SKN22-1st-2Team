@@ -1,9 +1,9 @@
 # scripts/update_data.py
 import os
 import traceback
+from typing import Optional
 import requests
 from dotenv import load_dotenv
-
 
 class EVChargerAPI:
     """공공데이터 전기차 충전소 API 핸들러"""
@@ -19,7 +19,7 @@ class EVChargerAPI:
         try:
             response = requests.get(f"{self.base_url}/{endpoint}", params=params)
             response.raise_for_status()
-            return response.json()
+            return response.json()['items']['item']
         except Exception as e:
             print(e)
             print(traceback.format_exception)
