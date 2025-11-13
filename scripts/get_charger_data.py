@@ -19,7 +19,7 @@ class EVChargerAPI:
         try:
             response = requests.get(f"{self.base_url}/{endpoint}", params=params)
             response.raise_for_status()
-            return response.json()['items']
+            return response.json()
         except Exception as e:
             print(e)
             print(traceback.format_exception)
@@ -57,8 +57,8 @@ if __name__ == "__main__":
     api = EVChargerAPI()
 
     # 테스트용
-    sta_id = "28260005"
-    chger_id = "O2"
+    # sta_id = "28260005"
+    # chger_id = "O2"
     sta_id = ""
     chger_id = ""
 
