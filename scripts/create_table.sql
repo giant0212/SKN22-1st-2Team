@@ -1,3 +1,4 @@
+-- Active: 1762504481605@@127.0.0.1@3306@grilled_kim
 -- ==========================================
 -- 1. 운영기관 정보
 -- ==========================================
@@ -119,6 +120,20 @@ CREATE INDEX idx_status_station ON charger_status(station_id);
 CREATE INDEX idx_status_charger ON charger_status(charger_id);
 CREATE INDEX idx_status_state ON charger_status(stat);
 
+-- ==========================================
+-- 8. 요금 정보 테이블
+-- ==========================================
+CREATE TABLE charge_price (
+    operator_code VARCHAR(20) NOT NULL,
+    operator_name VARCHAR(100) NOT NULL,
+    price_type_code VARCHAR(10) NOT NULL,
+    price_type_name VARCHAR(20) NOT NULL,
+    member_price DECIMAL(10,2) NOT NULL,
+    guest_price DECIMAL(10,2) NOT NULL,
+    update_dt DATE NOT NULL,
+
+    PRIMARY KEY (operator_code, price_type_code)
+);
 
 # 충전 단자 코드
 INSERT INTO charger_meta VALUES
