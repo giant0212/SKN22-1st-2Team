@@ -91,7 +91,7 @@ def save_charger_status(charger_status: Charger_status):
         with conn.cursor() as cursor:
             sql = """
             insert into 
-                        charger_station 
+                        charger_status 
             values (
                 %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON DUPLICATE KEY UPDATE
