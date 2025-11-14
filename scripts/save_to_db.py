@@ -3,6 +3,7 @@ import traceback
 from models.charger_station import Charger_station
 from models.charger_detail import Charger_detail
 from models.charger_status import Charger_status
+from models.charge_price import ChargePrice 
 from repository.db import get_connection
 
 
@@ -101,3 +102,27 @@ def save_charger_status(charger_status: Charger_status):
                 print(e)
                 print(traceback.format_exc())
                 
+
+# save - charge_price(요금정보)
+
+def save_charger_price(charge_price: ChargePrice):
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            sql = """
+            insert into 
+                        charge_price 
+            values (
+                %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                    member_price=%s
+                    upd_dt      = NOW()
+            """
+
+            params = (*charge_price, charge_price[4])
+            try:
+                cursor.execute(sql, params)
+                conn.commit()
+            except Exception as e:
+                conn.rollback()
+                print(e)
+                print(traceback.format_exc())
