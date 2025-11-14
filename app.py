@@ -14,6 +14,7 @@ from streamlit_js_eval import get_geolocation
 import threading
 import time
 import schedule
+from scripts.select_database import get_charger_station
 from services.scheduler import job
 
 layout.base_layout()
@@ -37,16 +38,17 @@ folium.Marker(
     icon=folium.Icon(color="red", icon="user"),
 ).add_to(m)
 
-# 예시: 충전소 데이터
+datas = get_charger_station()
+
 charger_data = [
-    {"name": "충전소 A", "lat": 37.476296, "lon": 126.9583876},
-    {"name": "충전소 B", "lat": 37.4800, "lon": 126.9600},
+    {"name": d.station_name, "lat": d.lat, "lng": d.lng}
+    for d in datas or []
 ]
 
 # 충전소 마커 표시
 for c in charger_data:
     folium.Marker(
-        [c["lat"], c["lon"]],
+        [c["lat"], c["lng"]],
         popup=f"🔋 {c['name']}<br>상세보기 클릭!",
         tooltip=c["name"],
         icon=folium.Icon(color="blue", icon="bolt"),
