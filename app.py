@@ -1,4 +1,5 @@
 # 스트림릿
+from dataclasses import asdict
 import streamlit as st
 import layout
 
@@ -14,7 +15,9 @@ from streamlit_js_eval import get_geolocation
 import threading
 import time
 import schedule
+from services.charger_detail import select_charger_detail
 from services.charger_station.select_charger_station import (
+    select_charger_station,
     select_charger_station_location,
 )
 from services.scheduler import job
@@ -23,11 +26,16 @@ layout.base_layout()
 
 # 현 위치 가져오기
 loc = get_geolocation()
-print(loc)
+
+MY_LAT = 0
+MY_LNG = 0
+
 if loc:
     # 지도 변수/상수
     MY_LAT = float(loc["coords"]["latitude"])
     MY_LNG = float(loc["coords"]["longitude"])
+
+if loc:
 
     # Folium 지도 객체 생성
     m = folium.Map(location=[MY_LAT, MY_LNG], zoom_start=13)
@@ -35,33 +43,40 @@ if loc:
     # 내 위치 마커
     folium.Marker(
         [MY_LAT, MY_LNG],
-        popup="📍 내 위치",
-        tooltip="현재 위치",
+        # popup="📍 내 위치",
+        # tooltip="현재 위치",
         icon=folium.Icon(color="red", icon="user"),
     ).add_to(m)
 
     datas = select_charger_station_location(MY_LAT, MY_LNG)
-    charger_data = [
-        {"name": d.station_name, "lat": d.lat, "lng": d.lng} for d in datas or []
-    ]
+    charger_data = [asdict(d) for d in datas or []]
 
     # 충전소 마커 표시
     for c in charger_data:
         folium.Marker(
             [c["lat"], c["lng"]],
-            popup=f"🔋 {c['name']}<br>상세보기 클릭!",
-            tooltip=c["name"],
+            # popup=f"🔋 {c['name']}<br>상세보기 클릭!",
+            tooltip=c["station_id"],
             icon=folium.Icon(color="blue", icon="bolt"),
         ).add_to(m)
 
     # ---- Folium 지도 렌더링 ----
-    st_data = st_folium(m, width=800, height=600)
+    st_data = st_folium(m, width=800, height=500)
 
     # ---- 클릭 이벤트 ----
     if st_data and st_data["last_object_clicked"]:
-        lat = st_data["last_clicked"]["lat"]
-        lon = st_data["last_clicked"]["lng"]
-        st.success(f"🖱️ 클릭한 마커 위치: ({lat:.6f}, {lon:.6f})")
+        lat = st_data["last_object_clicked"]["lat"]
+        lon = st_data["last_object_clicked"]["lng"]
+        station_id = str(st_data["last_object_clicked_tooltip"])
+        data = select_charger_station(station_id)
+        one_data = [asdict(d) for d in datas or []]
+        print("-" * 100)
+        print(one_data)
+        st.success(
+            f"""{station_id}, 
+                   
+                   """
+        )
         # 예: DB나 API를 이용한 충전소 상세조회
         st.write(
             "👉 이 좌표 인근의 충전소 정보를 불러오는 로직을 여기에 추가할 수 있습니다."

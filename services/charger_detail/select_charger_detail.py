@@ -11,7 +11,6 @@ def select_charger_detail(id: str = ""):
             select *
               from charger_detail
              where station_id = %s
-              limit 100
                 """
             try:
                 cursor.execute(sql, [id,])

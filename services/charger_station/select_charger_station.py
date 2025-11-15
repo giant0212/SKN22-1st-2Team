@@ -14,7 +14,6 @@ def select_charger_station(id: str = "") -> Optional[list]:
 """
             if id != "":
                 sql += "where station_id = " + id
-            sql += "limit 100"
 
             try:
                 cursor.execute(sql)
