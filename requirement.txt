@@ -3,3 +3,7 @@ requests
 beautifulsoup4
 schedule
 streamlit-js-eval
+streamlit_folium
+folium
+xlsxwriter
+openpyxl
