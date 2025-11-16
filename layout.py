@@ -40,9 +40,7 @@ def base_layout():
     # --- 사이드바 메뉴
 
     with st.sidebar:
-        st.page_link("app.py",                   label="Home")
-        st.page_link("pages/1_find_station.py",    label="충전소 검색")
-        st.page_link("pages/2_diff_charge.py",     label="요금비교")
-        st.page_link("pages/3_recommend_route.py", label="경로추천")
-        st.page_link("pages/4_faq_page.py",        label="FAQ")
+        st.page_link("app.py",                   label="⛽Home")
+        st.page_link("pages/2_diff_charge.py",     label="🪙요금비교")
+        st.page_link("pages/4_faq_page.py",        label="❓FAQ")
         st.sidebar.markdown('<div class="sidebar-gradient-line"></div>', unsafe_allow_html=True)

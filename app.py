@@ -87,7 +87,7 @@ else:
     st.warning("📍 위치 정보를 불러오는 중이거나, 권한이 거부되었습니다.")
 
 # 스케줄 등록
-schedule.every(30).minutes.do(job)
+#schedule.every(30).minutes.do(job)
 
 
 def background_thread():
