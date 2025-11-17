@@ -153,6 +153,7 @@ Repository for SKN22-1st-2Team
 
 # 화면 상세
 <img width="1517" height="784" alt="image" src="https://github.com/user-attachments/assets/7960c0f7-417a-4ceb-b977-10e9b7731059" />
+<img width="1882" height="780" alt="image" src="https://github.com/user-attachments/assets/6bea6c63-ced9-413b-ba1f-12bbe985cde2" />
 <img width="1402" height="617" alt="image" src="https://github.com/user-attachments/assets/e4ae83c4-e3df-4fbf-b0de-aa9ae137c7a3" />
 
 
